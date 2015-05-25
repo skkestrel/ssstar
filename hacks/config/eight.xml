@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<screensaver name="eight" _label="Eight" gl="yes">
+
+  <command arg="-root"/>
+
+  <boolean id="wire"    _label="Wireframe"   arg-set="-wireframe"/>
+  <boolean id="showfps" _label="Show frame rate" arg-set="-fps"/>
+
+  <xscreensaver-updater />
+
+  <_description>
+A curious eight-sided device of possibly Oriental origin.
+
+Written by Kevin Zhang; 2015.
+  </_description>
+</screensaver>

@@ -1,0 +1,60 @@
+.TH XScreenSaver 1 "20-May-2015" "X Version 11"
+.SH NAME
+eight - an octagonal box
+.SH SYNOPSIS
+.B eight
+[\-display \fIhost:display.screen\fP] [\-window] [\-root] [\-install]
+[\-visual \fIvisual\fP] [\-fps]
+[\-wireframe]
+.SH DESCRIPTION
+The \fIeight\fP program draws an animation of a curious eight-sided
+device of possible Oriental origin.
+.SH OPTIONS
+.I eight
+accepts the following options:
+.TP 8
+.B \-window
+Draw on a newly-created window.  This is the default.
+.TP 8
+.B \-root
+Draw on the root window.
+.TP 8
+.B \-install
+Install a private colormap for the window.
+.TP 8
+.B \-visual \fIvisual\fP\fP
+Specify which visual to use.  Legal values are the name of a visual class,
+or the id number (decimal or hex) of a specific visual.
+.TP 8
+.B \-wireframe
+Only draw outlines.
+.TP 8
+.B \-delay \fImicroseconds\fP
+How long to pause between frames.  Default is 20000, or 0.02 second.
+.TP 8
+.B \-fps
+Display the current frame rate, CPU load, and polygon count.
+.SH ENVIRONMENT
+.PP
+.TP 8
+.B DISPLAY
+to get the default host and display number.
+.TP 8
+.B XENVIRONMENT
+to get the name of a resource file that overrides the global resources
+stored in the RESOURCE_MANAGER property.
+.SH BUGS
+This hack is glacially slow on machines lacking hardware texture support.
+.SH SEE ALSO
+.BR X (1),
+.BR xscreensaver (1)
+.SH COPYRIGHT
+Copyright \(co 2015 by Kevin Zhang. Permission to use, copy, modify, 
+distribute, and sell this software and its documentation for any purpose is 
+hereby granted without fee, provided that the above copyright notice appear 
+in all copies and that both that copyright notice and this permission notice
+appear in supporting documentation.  No representations are made about the 
+suitability of this software for any purpose.  It is provided "as is" without
+express or implied warranty.
+.SH AUTHOR
+Kevin Zhang <sudo@pt-get.com>, 20-May-15.
