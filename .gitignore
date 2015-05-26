@@ -1,0 +1,7 @@
+Thumbs.db
+*.opensdf
+*.suo
+*.sdf
+win32/*/Debug/
+*.filters
+*.user
