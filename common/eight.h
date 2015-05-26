@@ -32,10 +32,10 @@ enum EIGHT_CamState
 
 enum EIGHT_TexType
 {
+	TEX_STAR = 2,
+	TEX_TOP = 1,
 	TEX_WOOD = 0,
-	TEX_TOP,
-	TEX_STAR,
-	TEX_END
+	TEX_END = 3
 };
 
 struct EIGHT_StarInfo

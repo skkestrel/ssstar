@@ -29,6 +29,7 @@
 
 #include <stdlib.h>
 #include "eight.h"
+#include "eight_tex.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -73,7 +74,7 @@ static const float OCT_POINTS[] =
 
 static const GLfloat star_mat[] =
 {
-	0.2, 0.2, 0.2, 1.0,      /* ambient */
+	0.4, 0.4, 0.4, 1.0,      /* ambient */
 	0.0, 0.0, 0.0, 1.0,      /* specular */
 	0.8, 0.8, 0.8, 1.0,      /* diffuse */
 	0                        /* shininess */
@@ -87,7 +88,7 @@ static const GLfloat tri_mat[] =
 };
 static const GLfloat base_mat[] =
 {
-	0.40, 0.42, 0.43, 1.00, /* ambient */
+	0.80, 0.82, 0.83, 1.00, /* ambient */
 	0.60, 0.67, 0.61, 1.00, /* specular */
 	0.99, 0.91, 0.81, 1.00, /* diffuse */
 	80.80                   /* shininess */
@@ -120,16 +121,6 @@ static void ScaleForWindow(int width, int height)
 		scale /= width / (GLfloat) height;
 	}
 
-	/* Constrain it to roughly life-sized on the screen, not huge.
-	 */
-# ifdef USE_IPHONE
-	if (size > 768)
-	{
-		/* iPad retina */
-		target_size *= 1.5;
-	}
-	else
-# endif
 	{
 		GLfloat max = 500;	/* 3" on my screen... */
 		if (target_size > max) target_size = max;
@@ -225,7 +216,7 @@ static int DrawStars(EIGHT_State *st)
 	glTranslatef(0, H_TOP + 0.15, 0);
 	glScalef(0.2, 0.2, 0.2);
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glDisable(GL_TEXTURE_2D);
 	for (i = 0; i < countof(st->stars); i++)
 	{
 		EIGHT_StarInfo *inf = &st->stars[i];
@@ -241,6 +232,7 @@ static int DrawStars(EIGHT_State *st)
 			inf->lifetime--;
 		}
 	}
+	glEnable(GL_TEXTURE_2D);
 
 	glPopMatrix();
 	return polys;
@@ -392,6 +384,7 @@ static void Animate(EIGHT_State *st)
 	glPopMatrix();
 
 	glDisable(GL_LIGHTING);
+	DrawStars(st);
 
 	glPopMatrix();
 }
@@ -798,7 +791,7 @@ static void InitGL(EIGHT_State *st)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_NORMALIZE);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -806,27 +799,40 @@ static void InitGL(EIGHT_State *st)
 	glCullFace(GL_BACK);
 	glFrontFace(GL_CW); /* wtf, did i seriously make all of my faces wind backwards?! */
 
-	/*
-	for (i = 0; i < countof(st->textures); i++)
+	GLuint *eight_data = (GLuint*) calloc(512 * 1536, sizeof(GLuint));
+	if (!eight_data) return;
+
+	int dest = 0;
+	for (i = 3 * 512; i >= 0; i--)
+	{
+		int o;
+		for (o = 0; o < 512; o++)
+		{
+			eight_data[dest] += header_data_cmap[header_data[i*512+o]][0] << 24;
+			eight_data[dest] += header_data_cmap[header_data[i*512+o]][1] << 16;
+			eight_data[dest] += header_data_cmap[header_data[i*512+o]][2] << 8;
+			eight_data[dest] += 255;
+			dest++;
+		}
+	}
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+	glGenTextures(TEX_END, st->textures);
+	for (i = 0; i < TEX_END; i++)
 	{
 		glBindTexture(GL_TEXTURE_2D, st->textures[i]);
 
 		glTexImage2D(
-				GL_TEXTURE_2D,
-				0,
-				GL_RGBA,
-				512,
-				1536,
-				0,
-				GL_RGBA,
-#ifdef USE_DWORD
-				GL_UNSIGNED_INT_8_8_8_8,
-#else
-				GL_UNSIGNED_BYTE,
-#endif
-				(char*) bmp_buf
-				);
-
+			GL_TEXTURE_2D,
+			0,
+			GL_RGBA,
+			512,
+			512,
+			0,
+			GL_RGBA,
+			GL_UNSIGNED_INT_8_8_8_8,
+			eight_data + (i * 512 * 512)
+			);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -839,7 +845,6 @@ static void InitGL(EIGHT_State *st)
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0.25);
 #endif
 	}
-	*/
 
 	for (i = 0; i < countof(st->dls); i++)
 	{
@@ -851,16 +856,16 @@ static void InitGL(EIGHT_State *st)
 		switch (i)
 		{
 			case DL_SPINNER_INNER:
-				st->pcounts[i] += GenSpinnerInner(st, 0);
+				st->pcounts[i] += GenSpinnerInner(st, 1);
 				break;
 			case DL_SPINNER_OUTER:
-				st->pcounts[i] += GenSpinnerOuter(st, 0);
+				st->pcounts[i] += GenSpinnerOuter(st, 1);
 				break;
 			case DL_BASE:
-				st->pcounts[i] += GenBase(st, 0);
+				st->pcounts[i] += GenBase(st, 1);
 				break;
 			case DL_STAR:
-				st->pcounts[i] += GenStar(st, 0);
+				st->pcounts[i] += GenStar(st, 1);
 				break;
 		}
 

@@ -4,6 +4,7 @@
 #include <GL/glu.h>
 #include "../../../common/eight.h"
 #include "resource.h"
+
 #pragma warning(disable: 4305 4244) 
 
 #pragma comment(lib, "ScrnSavw.lib")
@@ -13,7 +14,6 @@
 void InitGL(HWND hWnd, HDC & hDC, HGLRC & hRC);
 void CloseGL(HWND hWnd, HDC hDC, HGLRC hRC);
 void SetupAnimation(int Width, int Height);
-void OnTimer(HDC hDC);
 
 int Width, Height; //globals for size of screen
 
@@ -38,7 +38,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 		state.hdc = hDC;
 		EIGHT_Init(&state);
 
-		SetTimer(hWnd, TIMER, 10, NULL);
+		SetTimer(hWnd, TIMER, 16, NULL);
 		return 0;
 
 	case WM_DESTROY:
@@ -64,7 +64,6 @@ BOOL WINAPI RegisterDialogClasses(HANDLE hInst)
 {
 	return TRUE;
 }
-
 
 static void InitGL(HWND hWnd, HDC & hDC, HGLRC & hRC) {
 	PIXELFORMATDESCRIPTOR pfd;
