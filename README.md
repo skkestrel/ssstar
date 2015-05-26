@@ -1,4 +1,4 @@
-ssstar - a collection of screen savers
+ss☆ - a collection of screen savers
 
 Compiling (X11):
 	Download xscreensaver source from jwz.org/xscreensaver, and paste contents of x11/ folder inside xscreensaver root directory. ./configure, make, and make install.
