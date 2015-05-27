@@ -2,8 +2,10 @@ Thumbs.db
 *.opensdf
 *.suo
 *.sdf
-win32/Eight/Debug/
-win32/Eight/Release/
+win32/*/Debug/
+win32/*/Release/
+win32/Debug/
+win32/Release/
 *.filters
 *.user
 *.swp

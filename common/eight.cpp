@@ -41,19 +41,19 @@
 #undef countof
 #define countof(x) (sizeof((x)) / sizeof((*x)))
 
-#define OCT_OFFSET ((float) (0.58578643762690495119831 / 2.0)) /* 1 - sqrt(2)/2 */
-#define OCT_SIDE ((float) 0.414213562373095048801) /* sqrt2 - 1 */
+#define OCT_OFFSET ((float) (0.58578643762690495119831F / 2.0F)) /* 1 - sqrt(2)/2 */
+#define OCT_SIDE ((float) 0.414213562373095048801F) /* sqrt2 - 1 */
 
-static const float SIZE_YY = 1.0 / 3.0;
-static const float H_TRI = 0.47;
-static const float H_TOP = 0.45;
-static const float H_MID = 0.35;
-static const float H_BOT = 0.0;
-static const float A_TRI_SPAN = 0.35;
-static const float W_TRI_SPLIT = 0.04;
-static const float R_TRI_INNER = 0.5;
-static const float R_TRI_WIDTH = 0.10;
-static const float R_TRI_SPACE = 0.15;
+static const float SIZE_YY = 1.0F / 3.0F;
+static const float H_TRI = 0.47F;
+static const float H_TOP = 0.45F;
+static const float H_MID = 0.35F;
+static const float H_BOT = 0.0F;
+static const float A_TRI_SPAN = 0.35F;
+static const float W_TRI_SPLIT = 0.04F;
+static const float R_TRI_INNER = 0.5F;
+static const float R_TRI_WIDTH = 0.10F;
+static const float R_TRI_SPACE = 0.15F;
 
 static const int TRI_CONFIG[] =
 {
@@ -74,31 +74,31 @@ static const float OCT_POINTS[] =
 
 static const GLfloat star_mat[] =
 {
-	0.4, 0.4, 0.4, 1.0,      /* ambient */
-	0.0, 0.0, 0.0, 1.0,      /* specular */
-	0.8, 0.8, 0.8, 1.0,      /* diffuse */
+	0.4F, 0.4F, 0.4F, 1.0F,      /* ambient */
+	0.0F, 0.0F, 0.0F, 1.0F,      /* specular */
+	0.8F, 0.8F, 0.8F, 1.0F,      /* diffuse */
 	0                        /* shininess */
 };
 static const GLfloat tri_mat[] =
 {
-	0.1, 0.1, 0.1, 1.0,      /* ambient */
-	0.50, 0.50, 0.50, 1.00,  /* specular */
-	0.20, 0.20, 0.20, 1.00,  /* diffuse */
+	0.1F, 0.1F, 0.1F, 1.0F,      /* ambient */
+	0.50F, 0.50F, 0.50F, 1.00F,  /* specular */
+	0.20F, 0.20F, 0.20F, 1.00F,  /* diffuse */
 	100                      /* shininess */
 };
 static const GLfloat base_mat[] =
 {
-	0.80, 0.82, 0.83, 1.00, /* ambient */
-	0.60, 0.67, 0.61, 1.00, /* specular */
-	0.99, 0.91, 0.81, 1.00, /* diffuse */
-	80.80                   /* shininess */
+	0.80F, 0.82F, 0.83F, 1.00F, /* ambient */
+	0.60F, 0.67F, 0.61F, 1.00F, /* specular */
+	0.99F, 0.91F, 0.81F, 1.00F, /* diffuse */
+	80.80F                   /* shininess */
 };
 static const GLfloat top_mat[] =
 {
-	0.50, 0.50, 0.50, 1.00, /* ambient */
-	0.85, 0.85, 0.95, 1.00, /* specular */
-	0.99, 0.99, 0.99, 1.00, /* diffuse */
-	80.80                   /* shininess */
+	0.50F, 0.50F, 0.50F, 1.00F, /* ambient */
+	0.85F, 0.85F, 0.95F, 1.00F, /* specular */
+	0.99F, 0.99F, 0.99F, 1.00F, /* diffuse */
+	80.80F                   /* shininess */
 };
 
 static EIGHT_State *sts = NULL;
@@ -167,7 +167,7 @@ static int DrawStar(EIGHT_State *st, EIGHT_StarInfo *inf)
 	glPushMatrix();
 
 	glTranslatef(inf->x, inf->y, inf->z);
-	glColor4f(inf->r, inf->g, inf->b, 0.2);
+	glColor4f(inf->r, inf->g, inf->b, 0.2F);
 	ClearRotation();
 	glRotatef(inf->rot / M_PI * 180, 0, 0, 1);
 
@@ -197,10 +197,10 @@ static int DrawStars(EIGHT_State *st)
 				inf->g = rand() / (float) RAND_MAX;
 				inf->b = rand() / (float) RAND_MAX;
 
-				inf->dy = 0.1 + rand() / (float) RAND_MAX * 0.1;
+				inf->dy = 0.1F + rand() / (float) RAND_MAX * 0.1F;
 
 				theta = rand() / (float) RAND_MAX * M_PI * 2;
-				r = 0.08 + rand() / (float) RAND_MAX * 0.03;
+				r = 0.08F + rand() / (float) RAND_MAX * 0.03F;
 				inf->dx = r * cos(theta);
 				inf->dz = r * sin(theta);
 
@@ -213,8 +213,8 @@ static int DrawStars(EIGHT_State *st)
 	glPushMatrix();
 	ApplyMat(star_mat);
 
-	glTranslatef(0, H_TOP + 0.15, 0);
-	glScalef(0.2, 0.2, 0.2);
+	glTranslatef(0, H_TOP + 0.15F, 0);
+	glScalef(0.2F, 0.2F, 0.2F);
 
 	glDisable(GL_TEXTURE_2D);
 	for (i = 0; i < countof(st->stars); i++)
@@ -228,7 +228,7 @@ static int DrawStars(EIGHT_State *st)
 			inf->x += inf->dx;
 			inf->y += inf->dy;
 			inf->z += inf->dz;
-			inf->dy -= 0.008;
+			inf->dy -= 0.005F;
 			inf->lifetime--;
 		}
 	}
@@ -240,22 +240,22 @@ static int DrawStars(EIGHT_State *st)
 
 static void AnimateTick(EIGHT_State *st)
 {
-	if (st->time++ > 60)
+	if (st->time++ > 80)
 	{
 		st->time = 0;
 
 		st->outer_target_theta -= M_PI_4;
 	}
 
-	st->outer_omega += (st->outer_target_theta - st->outer_theta) * 0.08; /* spring constant */
-	st->outer_omega *= 0.85; /* damping */
+	st->outer_omega += (st->outer_target_theta - st->outer_theta) * 0.06F; /* spring constant */
+	st->outer_omega *= 0.90F; /* damping */
 	/* calculating the frequency of oscillation is left as an exercise to the reader */
 
-	st->inner_omega = 0.02;
+	st->inner_omega = 0.02F;
 
 	st->outer_theta += st->outer_omega;
 	st->inner_theta += st->inner_omega;
-	st->base_theta -= 0.006;
+	st->base_theta -= 0.005F;
 
 	if (st->outer_theta < -M_PI * 2 && st->outer_target_theta < -M_PI * 2)
 	{
@@ -281,7 +281,7 @@ static void Animate(EIGHT_State *st)
 	ry = 0;
 	rz = 0;
 
-#define SMOOTH(x, xmax) ((sin((x) / (xmax) * 2 * M_PI_2 - M_PI_2) + 1) / 2.0)
+#define SMOOTH(x, xmax) ((sin((x) / (xmax) * 2 * M_PI_2 - M_PI_2) + 1) / 2.0F)
 
 	switch (st->cam_state)
 	{
@@ -289,17 +289,17 @@ static void Animate(EIGHT_State *st)
 			if (st->cam_ticks > -100) break; /* cool down */
 			if (rand() % 1500 == 0)
 			{
-				st->cam_ticks = 150;
+				st->cam_ticks = 250;
 				st->cam_state = CAM_SHAKE;
 			}
 			else if (rand() % 1500 == 0)
 			{
-				st->cam_ticks = 250;
+				st->cam_ticks = 400;
 				st->cam_state = CAM_SWEEP;
 			}
 			else if (rand() % 1500 == 0)
 			{
-				st->cam_ticks = 400;
+				st->cam_ticks = 600;
 				st->cam_state = CAM_COOL;
 			}
 			else if (rand() % 1500 == 0)
@@ -309,18 +309,18 @@ static void Animate(EIGHT_State *st)
 			}
 			break;
 		case CAM_SHAKE:
-			rz = sin(st->cam_ticks / 5.0) * sin(st->cam_ticks / 150.0 * M_PI) * 0.1;
+			rz = sin(st->cam_ticks / 5.0F) * sin(st->cam_ticks / 250.0F * M_PI) * 0.1F;
 			break;
 		case CAM_NORMAL:
 			{
 				float stage;
 				if (st->cam_ticks > 750)
 				{
-					stage = SMOOTH(800 - st->cam_ticks, 50.0);
+					stage = SMOOTH(800 - st->cam_ticks, 50.0F);
 				}
 				else if (st->cam_ticks < 50)
 				{
-					stage = 1 - SMOOTH(50 - st->cam_ticks, 50.0);
+					stage = 1 - SMOOTH(50 - st->cam_ticks, 50.0F);
 				}
 				else stage = 1;
 
@@ -332,24 +332,24 @@ static void Animate(EIGHT_State *st)
 		case CAM_COOL:
 			{
 				float stage;
-				if (st->cam_ticks > 350)
+				if (st->cam_ticks > 550)
 				{
-					stage = SMOOTH(400 - st->cam_ticks, 50.0);
+					stage = SMOOTH(600 - st->cam_ticks, 50.0F);
 				}
 				else if (st->cam_ticks < 50)
 				{
-					stage = 1 - SMOOTH(50 - st->cam_ticks, 50.0);
+					stage = 1 - SMOOTH(50 - st->cam_ticks, 50.0F);
 				}
 				else stage = 1;
 
 				tx = stage * 4;
-				ty = stage * 0.2;
+				ty = stage * 0.2F;
 
 				rx = M_PI_2 / 5 + stage * (M_PI_2 / 3 - M_PI_2 / 5);
 			}
 			break;
 		case CAM_SWEEP:
-			ry = -SMOOTH(250 - st->cam_ticks, 250.0) * M_PI * 4;
+			ry = -SMOOTH(400 - st->cam_ticks, 400.0F) * M_PI * 4;
 			break;
 	}
 
@@ -370,6 +370,25 @@ static void Animate(EIGHT_State *st)
 
 	glRotatef(st->base_theta / M_PI * 180, 0, 1, 0);
 	glCallList(st->dls[DL_BASE]);
+
+#if 0
+	//coord axes
+	glDisable(GL_LIGHTING);
+	glDisable(GL_TEXTURE_2D);
+	glBegin(GL_LINES);
+	glColor4f(1, 0, 0, 1);
+	glVertex3f(0, 0, 0);
+	glVertex3f(2, 0, 0);
+	glColor4f(0, 1, 0, 1);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 2, 0);
+	glColor4f(0, 0, 1, 1);
+	glVertex3f(0, 0, 0);
+	glVertex3f(0, 0, 2);
+	glEnd();
+	glEnable(GL_LIGHTING);
+	glEnable(GL_TEXTURE_2D);
+#endif
 	
 	glPushMatrix();
 	glRotatef(st->outer_theta / M_PI * 180, 0, 1, 0);
@@ -394,7 +413,7 @@ static void Animate(EIGHT_State *st)
 	do \
 	{ \
 		glNormal3f(0, 1, 0); \
-		glTexCoord2f(cth * SIZE_YY * 0.5 + 0.5, sth * SIZE_YY * 0.5 + 0.5); \
+		glTexCoord2f(cth * SIZE_YY * 0.5F + 0.5F, sth * SIZE_YY * 0.5F + 0.5F); \
 		glVertex3f(cth * SIZE_YY / 2, H, sth * SIZE_YY / 2); \
 	} while (0)
 
@@ -405,15 +424,15 @@ static void Animate(EIGHT_State *st)
 		glNormal3f(NX, 0, NY); \
 		glVertex3f(X1, Y1, Z1); \
 \
-		glTexCoord2f(0.25, 0); \
+		glTexCoord2f(0.25F, 0); \
 		glNormal3f(NX, 0, NY); \
 		glVertex3f(X2, Y1, Z2); \
 \
-		glTexCoord2f(0.25, 0.1); \
+		glTexCoord2f(0.25F, 0.1F); \
 		glNormal3f(NX, 0, NY); \
 		glVertex3f(X2, Y2, Z2); \
 \
-		glTexCoord2f(0, 0.1); \
+		glTexCoord2f(0, 0.1F); \
 		glNormal3f(NX, 0, NY); \
 		glVertex3f(X1, Y2, Z1); \
 	} while (0)
@@ -453,22 +472,22 @@ static int GenOctPrism(EIGHT_State *st, int texture, int rotate_texture, float y
 
 		glTexCoord2f(uv[0], uv[1]);
 		glNormal3f(cth, 0, sth);
-		glVertex3f(px - 0.5, ymin, py - 0.5);
+		glVertex3f(px - 0.5F, ymin, py - 0.5F);
 
 		glTexCoord2f(uv[2], uv[3]);
 		glNormal3f(cth, 0, sth);
-		glVertex3f(px - 0.5, ymax, py - 0.5);
+		glVertex3f(px - 0.5F, ymax, py - 0.5F);
 
 		px = OCT_POINTS[2 * i];
 		py = OCT_POINTS[2 * i + 1];
 
 		glTexCoord2f(uv[4], uv[5]);
 		glNormal3f(cth, 0, sth);
-		glVertex3f(px - 0.5, ymax, py - 0.5);
+		glVertex3f(px - 0.5F, ymax, py - 0.5F);
 
 		glTexCoord2f(uv[6], uv[7]);
 		glNormal3f(cth, 0, sth);
-		glVertex3f(px - 0.5, ymin, py - 0.5);
+		glVertex3f(px - 0.5F, ymin, py - 0.5F);
 	}
 	glEnd();
 	return 16;
@@ -530,7 +549,7 @@ static int GenTrigrams(EIGHT_State *st, int texture)
 			glNormal3f(0, 1, 0);
 			glVertex3f(cdn * in, H_TRI, sdn * in);
 
-			glTexCoord2f(0.1, 0);
+			glTexCoord2f(0.1F, 0);
 			glNormal3f(0, 1, 0);
 			glVertex3f(cdn * out, H_TRI, sdn * out);
 
@@ -543,11 +562,11 @@ static int GenTrigrams(EIGHT_State *st, int texture)
 				float xao = out * (cup + cdn) / 2;
 				float yao = out * (sup + sdn) / 2;
 
-				glTexCoord2f(0.1, 0.25);
+				glTexCoord2f(0.1F, 0.25F);
 				glNormal3f(0, 1, 0);
 				glVertex3f(xao - xdf, H_TRI, yao - ydf);
 
-				glTexCoord2f(0, 0.25);
+				glTexCoord2f(0, 0.25F);
 				glNormal3f(0, 1, 0);
 				glVertex3f(xai - xdf, H_TRI, yai - ydf);
 
@@ -562,20 +581,20 @@ static int GenTrigrams(EIGHT_State *st, int texture)
 				RECT(-ny, nx, xao - xdf, xai - xdf, H_TOP, H_TRI, yao - ydf, yai - ydf);
 				RECT(ny, -nx, xai + xdf, xao + xdf, H_TOP, H_TRI, yai + ydf, yao + ydf);
 
-				glTexCoord2f(0, 0.25);
+				glTexCoord2f(0, 0.25F);
 				glNormal3f(0, 1, 0);
 				glVertex3f(xai + xdf, H_TRI, yai + ydf);
 
-				glTexCoord2f(0.1, 0.25);
+				glTexCoord2f(0.1F, 0.25F);
 				glNormal3f(0, 1, 0);
 				glVertex3f(xao + xdf, H_TRI, yao + ydf);
 			}
 
-			glTexCoord2f(0.1, 0.5);
+			glTexCoord2f(0.1F, 0.5F);
 			glNormal3f(0, 1, 0);
 			glVertex3f(cup * out, H_TRI, sup * out);
 
-			glTexCoord2f(0, 0.5);
+			glTexCoord2f(0, 0.5F);
 			glNormal3f(0, 1, 0);
 			glVertex3f(cup * in, H_TRI, sup * in);
 
@@ -600,7 +619,7 @@ static int GenTrigrams(EIGHT_State *st, int texture)
 static int GenStar(EIGHT_State *st, int texture)
 {
 	const float ANGLE = M_PI * 2 / 5;
-	const float R = 0.2;
+	const float R = 0.2F;
 	int i;
 	glBegin(texture ? GL_TRIANGLES : GL_LINE_LOOP);
 
@@ -661,14 +680,14 @@ static int GenSpinnerOuter(EIGHT_State *st, int texture)
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, 1, 0);
-		glVertex3f(px - 0.5, H_TOP, py - 0.5);
+		glVertex3f(px - 0.5F, H_TOP, py - 0.5F);
 
 		px = OCT_POINTS[(2 * i + 2) % 16];
 		py = OCT_POINTS[(2 * i + 3) % 16];
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, 1, 0);
-		glVertex3f(px - 0.5, H_TOP, py - 0.5);
+		glVertex3f(px - 0.5F, H_TOP, py - 0.5F);
 
 		if (!texture) GEN_INNER_CIRCLE(H_TOP);
 	}
@@ -687,7 +706,7 @@ static int GenSpinnerOuter(EIGHT_State *st, int texture)
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, 1, 0);
-		glVertex3f(px - 0.5, H_TOP, py - 0.5);
+		glVertex3f(px - 0.5F, H_TOP, py - 0.5F);
 
 		for (j = resolution; j >= 0; j--)
 		{
@@ -700,7 +719,7 @@ static int GenSpinnerOuter(EIGHT_State *st, int texture)
 		if (!texture)
 		{
 			glNormal3f(0, 1, 0);
-			glVertex3f(px - 0.5, H_TOP, py - 0.5);
+			glVertex3f(px - 0.5F, H_TOP, py - 0.5F);
 		}
 
 		glEnd();
@@ -720,7 +739,7 @@ static int GenSpinnerOuter(EIGHT_State *st, int texture)
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, -1, 0);
-		glVertex3f(px - 0.5, H_MID, py - 0.5);
+		glVertex3f(px - 0.5F, H_MID, py - 0.5F);
 	}
 	glEnd();
 	polys += 6;
@@ -751,7 +770,7 @@ static int GenBase(EIGHT_State *st, int texture)
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, -1, 0);
-		glVertex3f(px - 0.5, H_BOT, py - 0.5);
+		glVertex3f(px - 0.5F, H_BOT, py - 0.5F);
 	}
 	glEnd();
 
@@ -765,9 +784,10 @@ static int GenBase(EIGHT_State *st, int texture)
 
 		glTexCoord2f(px, py);
 		glNormal3f(0, 1, 0);
-		glVertex3f(px - 0.5, H_MID, py - 0.5);
+		glVertex3f(px - 0.5F, H_MID, py - 0.5F);
 	}
 	glEnd();
+
 	polys += 12;
 
 	return polys;
@@ -777,9 +797,9 @@ static void InitGL(EIGHT_State *st)
 {
 	int i;
 
-	static const GLfloat pos0[]	= { 0, 20, 20, 1.0 };
-	static const GLfloat amb0[]	= { 0.8, 0.8, 0.8, 1.0 };
-	static const GLfloat dif0[]	= { 1, 1, 1, 1.0 };
+	static const GLfloat pos0[]	= { 0, 20, 20, 1.0F };
+	static const GLfloat amb0[]	= { 0.8F, 0.8F, 0.8F, 1.0F };
+	static const GLfloat dif0[]	= { 1, 1, 1, 1.0F };
 
 	glLightfv(GL_LIGHT0, GL_POSITION, pos0);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, amb0);
@@ -808,9 +828,17 @@ static void InitGL(EIGHT_State *st)
 		int o;
 		for (o = 0; o < 512; o++)
 		{
-			eight_data[dest] += header_data_cmap[header_data[i*512+o]][0] << 24;
-			eight_data[dest] += header_data_cmap[header_data[i*512+o]][1] << 16;
-			eight_data[dest] += header_data_cmap[header_data[i*512+o]][2] << 8;
+			int ti = i;
+
+			/*
+			 * for some reason the texture has a greyscale band at the bottom...
+			 * so we'll just copy the second-from-last line to the first line instead :D
+			 */
+			if (i == 3 * 512) ti = 1;
+
+			eight_data[dest] += header_data_cmap[header_data[ti*512+o]][0] << 24;
+			eight_data[dest] += header_data_cmap[header_data[ti*512+o]][1] << 16;
+			eight_data[dest] += header_data_cmap[header_data[ti*512+o]][2] << 8;
 			eight_data[dest] += 255;
 			dest++;
 		}
@@ -842,7 +870,7 @@ static void InitGL(EIGHT_State *st)
 #define GL_TEXTURE_LOD_BIAS GL_TEXTURE_LOD_BIAS_EXT
 #endif
 #ifdef GL_TEXTURE_LOD_BIAS
-		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0.25);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, 0.25F);
 #endif
 	}
 
@@ -881,7 +909,7 @@ void EIGHT_Reshape(EIGHT_State *st)
 
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	glFrustum(-1.0, 1.0, -h, h, 2.0, 70.0);
+	glFrustum(-1.0F, 1.0F, -h, h, 2.0F, 70.0F);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);

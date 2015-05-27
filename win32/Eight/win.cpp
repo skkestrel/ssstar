@@ -4,6 +4,7 @@
 #include <GL/glu.h>
 #include "../../../common/eight.h"
 #include "resource.h"
+#include <time.h>
 
 #pragma warning(disable: 4305 4244) 
 
@@ -27,7 +28,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 	switch (message) {
 
 	case WM_CREATE:
-		// get window dimensions
+		srand(time(NULL));
 		GetClientRect(hWnd, &rect);
 		Width = rect.right;
 		Height = rect.bottom;
@@ -38,7 +39,7 @@ LRESULT WINAPI ScreenSaverProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
 		state.hdc = hDC;
 		EIGHT_Init(&state);
 
-		SetTimer(hWnd, TIMER, 16, NULL);
+		SetTimer(hWnd, TIMER, 15, NULL);
 		return 0;
 
 	case WM_DESTROY:
