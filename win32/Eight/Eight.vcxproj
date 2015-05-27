@@ -85,8 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\common\eight.h" />
-    <ClInclude Include="..\..\..\common\xpm.h" />
+    <ClInclude Include="..\..\common\eight.h" />
+    <ClInclude Include="..\..\common\eight_tex.h" />
     <ClInclude Include="..\glext.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -94,8 +94,7 @@
     <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\common\eight.cpp" />
-    <ClCompile Include="..\..\..\common\xpm.c" />
+    <ClCompile Include="..\..\common\eight.cpp" />
     <ClCompile Include="win.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@
 #include <Windows.h>
 #include <GL/gl.h>
 #include <stdio.h>
-#include "../win32/ssstar/glext.h"
+#include "../win32/glext.h"
 
 #include <stdlib.h>
 #include "eight.h"

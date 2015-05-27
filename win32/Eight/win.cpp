@@ -2,7 +2,7 @@
 #include  <scrnsave.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../../../common/eight.h"
+#include "../../common/eight.h"
 #include "resource.h"
 #include <time.h>
 
