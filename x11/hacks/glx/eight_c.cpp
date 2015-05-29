@@ -22,14 +22,19 @@
  * Thanks for bearing with me!
  */
 
-#include <Windows.h>
-#include <GL/gl.h>
 #include <stdio.h>
-#include "../win32/glext.h"
-
 #include <stdlib.h>
-#include "eight.h"
-#include "eight_tex.h"
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
+#include <GL/gl.h>
+#ifdef _WIN32
+#include "../../../win32/glext.h"
+#endif
+
+#include "eight_c.h"
+#include "../images/eight_tex.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -277,7 +282,7 @@ static void Animate(EIGHT_State *st)
 	glPushMatrix();
 
 	tx = ty = tz = 0;
-	rx = M_PI_2 / 5;
+	rx = (float) (M_PI_2 / 5);
 	ry = 0;
 	rz = 0;
 
@@ -618,7 +623,7 @@ static int GenTrigrams(EIGHT_State *st, int texture)
 
 static int GenStar(EIGHT_State *st, int texture)
 {
-	const float ANGLE = M_PI * 2 / 5;
+	const float ANGLE = (float) M_PI * 2 / 5;
 	const float R = 0.2F;
 	int i;
 	glBegin(texture ? GL_TRIANGLES : GL_LINE_LOOP);

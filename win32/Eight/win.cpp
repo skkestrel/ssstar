@@ -1,8 +1,8 @@
 #include <windows.h>
-#include  <scrnsave.h>
+#include <scrnsave.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "../../common/eight.h"
+#include "../../x11/hacks/glx/eight_c.h"
 #include "resource.h"
 #include <time.h>
 
